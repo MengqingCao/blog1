@@ -25,7 +25,8 @@ jobs:
           git config --global user.name "MengqingCao"
           git config --global user.email "cmq0113@163.com"
           issue_number=$(jq -r ".issue.number" "$GITHUB_EVENT_PATH")
-          python ./knowledgeMap/addBlog.py ./knowledgeMap/index.html ${github.event.issue.title} $issue_number llm
+          issueTitle=$(jq -r ".issue.title" "$GITHUB_EVENT_PATH")
+          python ./knowledgeMap/addBlog.py ./knowledgeMap/index.html $issueTitle $issue_number llm
           git add .
-          git commit -m "Update HTML with Issue #${github.event.issue.number}"
+          git commit -m "Update HTML with Issue #${issue_number}"
           git push origin $GITHUB_REF
